@@ -1,2 +1,167 @@
 # augustopcm.io
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PERMISSÃO DE TRABALHO ESPECIAL</title>
+    <style>
+        body {
+            background-color: #2C4156;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        select,
+        input[type="datetime-local"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        select[multiple] {
+            height: 150px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+</head>
+
+<body>
+    <h1>PERMISSÃO DE TRABALHO ESPECIAL</h1>
+    <form>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="Trabalho a quente">Trabalho a quente</option>
+            <!-- Outras opções aqui... -->
+        </select>
+
+        <label for="data">Data e Hora:</label>
+        <input type="datetime-local" id="data" name="data" required>
+
+        <label for="funcao">Função:</label>
+        <select id="funcao" name="funcao" required>
+            <option value="Caldeireiro">Caldeireiro</option>
+            <!-- Outras opções aqui... -->
+        </select>
+
+        <label for="setor">Setor:</label>
+        <select id="setor" name="setor" required>
+            <option value="Extração de Caldo">Extração de Caldo</option>
+            <!-- Outras opções aqui... -->
+        </select>
+
+        <label for="riscos">Riscos Potenciais:</label>
+        <div class="button-container">
+            <select id="riscos" name="riscos" multiple required>
+                <option value="Desabamento">Desabamento</option>
+                <!-- Outras opções aqui... -->
+            </select>
+            <button onclick="addRisk()">Adicionar Risco</button>
+        </div>
+
+        <label for="selectedRisks">Riscos Selecionados:</label>
+        <div class="button-container">
+            <select id="selectedRisks" name="selectedRisks" multiple></select>
+            <button onclick="removeRisk()">Remover Risco</button>
+        </div>
+
+        <label for="protecoes">Proteções Necessárias:</label>
+        <div class="button-container">
+            <select id="protecoes" name="protecoes" multiple required>
+                <option value="Amarrar ferramentas">Amarrar ferramentas</option>
+                <option value="Andaime">Andaime</option>
+                <option value="APR tarefa">APR tarefa</option>
+                <!-- Adicione mais opções de proteção aqui... -->
+            </select>
+            <button onclick="addProtection()">Adicionar Proteção</button>
+        </div>
+
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes" rows="4" cols="50"></textarea>
+
+        <label for="responsavel">Responsável:</label>
+        <input type="text" id="responsavel" name="responsavel" required>
+
+        <label for="assinatura">Assinatura:</label>
+        <br>
+        <canvas id="signatureCanvas" width=400 height=200 style="border: 1px solid #ccc;"></canvas>
+        <br>
+        <button onclick="limparAssinatura()">Limpar Assinatura</button>
+        <br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas);
+
+        function limparAssinatura() {
+            signaturePad.clear();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function resizeCanvas() {
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext('2d').scale(ratio, ratio);
+            signaturePad.clear();
+        }
+
+        function addRisk() {
+            const risks = document.getElementById('riscos');
+            const selectedRisk = risks.options[risks.selectedIndex].value;
+            const selectedList = document.getElementById('selectedRisks');
+
+            const option = document.createElement('option');
+            option.text = selectedRisk;
+            option.value = selectedRisk;
+            selectedList.add(option);
+        }
+
+        function removeRisk() {
+            var selectedList = document.getElementById('selectedRisks');
+            var selectedIndex = selectedList.selectedIndex;
+            if (selectedIndex >= 0) {
+                selectedList.remove(selectedIndex);
+            }
+        }
+    </script>
+</body>
+
+</html>
+
 Site PCM
